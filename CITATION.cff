@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Momier
+    given-names: Rodolphe
+    orcid: https://orcid.org/0000-0002-0904-3934
+title: "Wigner: naive functions to compute Wigner symbols"
+version: 0.0.0
+date-released: 2024-02-23
