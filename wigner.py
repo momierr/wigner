@@ -5,7 +5,10 @@ from scipy.special import gammaln
 
 
 def delta(a,b,c):
-    return np.sqrt(math.factorial(a + b - c) * math.factorial(a - b + c) * math.factorial(-a + b + c) / math.factorial(a + b + c + 1))
+    if a < 0 or b < 0 or c < 0:
+        return 0
+    else:
+        return np.sqrt(math.factorial(a + b - c) * math.factorial(a - b + c) * math.factorial(-a + b + c) / math.factorial(a + b + c + 1))    
     
 def wigner3j(j1, j2, j3, m1, m2, m3):
     
@@ -81,16 +84,19 @@ def wigner6j(j1,j2,j3,j4,j5,j6):
     t7 = j3 + j1 + j6 + j4
     
     sup = min([t5, t6, t7])
-
- 
-    w6j = delta(j1,j2,j3) * delta(j1,j5,j6) * delta(j4,j2,j6) * delta(j4,j5,j3)
-    sum = 0
     
-    for k in range(inf, sup + 1):
-        X = np.exp(gammaln(k-t1+1)) * np.exp(gammaln(k-t2+1)) * np.exp(gammaln(k-t3+1)) * np.exp(gammaln(k-t4+1)) * np.exp(gammaln(t5-k+1)) * np.exp(gammaln(t6-k+1)) * np.exp(gammaln(t7-k+1))  
-        sum += (-1)**k * np.exp(gammaln(k+2)) / X
+    if delta(j1,j2,j3) == 0 or delta(j1,j5,j6) == 0 or delta(j4,j2,j6) == 0 or delta(j4,j5,j3):
+        return 0
+    
+    else:
+        w6j = delta(j1,j2,j3) * delta(j1,j5,j6) * delta(j4,j2,j6) * delta(j4,j5,j3)
+        sum = 0
         
-    w6j *= sum
-    
-    return w6j
+        for k in range(inf, sup + 1):
+            X = np.exp(gammaln(k-t1+1)) * np.exp(gammaln(k-t2+1)) * np.exp(gammaln(k-t3+1)) * np.exp(gammaln(k-t4+1)) * np.exp(gammaln(t5-k+1)) * np.exp(gammaln(t6-k+1)) * np.exp(gammaln(t7-k+1))  
+            sum += (-1)**k * np.exp(gammaln(k+2)) / X
+            
+        w6j *= sum
+        
+        return w6j
 
